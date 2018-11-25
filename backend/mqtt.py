@@ -91,20 +91,19 @@ class SensorDoggyService(object):
 
     def get_doggy_will_to_live(self):
         activity_past_minute = self._get_activity_past_minute()
-        logger_doggy.info('Activity {}'.format(activity_past_minute))
 
         if activity_past_minute < 100:
-            return 0
+            return activity_past_minute, 0
         elif activity_past_minute < 150:
-            return 1
+            return activity_past_minute, 1
         elif activity_past_minute < 240:
-            return 2
+            return activity_past_minute, 2
         elif activity_past_minute < 300:
-            return 3
+            return activity_past_minute, 3
         elif activity_past_minute < 350:
-            return 4
+            return activity_past_minute, 4
         else:
-            return 5
+            return activity_past_minute, 5
 
     def get_steps(self):
         try:
@@ -271,11 +270,16 @@ class SinfulTinderness(object):
         """
         while True:
             time.sleep(1)
-            will_to_live = self.sensor_service.get_doggy_will_to_live()
+            activity, will_to_live = self.sensor_service.get_doggy_will_to_live()
+            service_allowed = self.service_permissions.get('suunto', True)
             doggy_payload = {
                 'will_to_live': will_to_live,
-                'service_allowed': self.service_permissions.get('suunto', True)
+                'service_allowed': service_allowed
             }
+            if service_allowed:
+                logger_doggy.info('Activity {}, Doggy happiness {}'.format(activity, will_to_live))
+            else:
+                logger_doggy.info('Activity -, Doggy happiness -')
             self.client.publish(MQTT_TOPIC_DOGGY, json.dumps(doggy_payload))
             logger_ack.info('Published to {}'.format(MQTT_TOPIC_DOGGY))
 

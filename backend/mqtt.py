@@ -1,11 +1,9 @@
-import base64
 import json
 import random
 import sys
 import time
 import logging
 
-import datetime
 import paho.mqtt.client as Paho
 import thread
 
@@ -19,8 +17,6 @@ MQTT_TOPIC = [(MQTT_TOPIC_CORE, 0), (MQTT_TOPIC_BLOCKME, 0), (MQTT_TOPIC_SENSOR,
 
 MQTT_ADDRESS = 'broker.mqttdashboard.com'
 MQTT_PORT = 8000
-#logging.basicConfig(level = logging.INFO, filename = "digitaltwin.log")
-#logging.basicConfig(format='%(asctime)s  %(levelname)-10s %(processName)s  %(name)s %(message)s')
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 
 
@@ -35,6 +31,7 @@ def setup_logger(name, log_file, level=logging.INFO):
     logger.addHandler(handler)
 
     return logger
+
 
 logger_msg = setup_logger('mqtt_msg', 'mqtt_messages.log')
 logger_ack = setup_logger('mqtt_ack', 'mqtt_ack.log')
@@ -90,7 +87,6 @@ class SensorDoggyService(object):
         activity = 0.0
         for record in applicable_records:
             activity += record
-        #return activity / 100 # Let's scale down a bit
         return sum(applicable_records) / float(len(applicable_records))
 
     def get_doggy_will_to_live(self):
@@ -198,7 +194,7 @@ class SinfulTinderness(object):
         self.sensor_service = SensorDoggyService()
         try:
             thread.start_new_thread(self._send_doggy_data, ())
-        except:
+        except:  # FIXME broaaaaad.
             raise
 
     def on_connect(self, *args, **kwargs):
@@ -248,7 +244,6 @@ class SinfulTinderness(object):
         time.sleep(1)
         while True:
             time.sleep(4)
-            #user_input = input("Confess your sins: ")
 
             input_1 = random.randint(0, 3)
             input_2 = random.randint(0, 3)
@@ -257,13 +252,9 @@ class SinfulTinderness(object):
 
             selection = {
                 0: self._progress_in_line_chart,
-                #1: self._pie_01_add_red,
-                #1: self._pie_01_add_green,
-                #3: self._pie_01_add_blue,
                 1: self._pie_02_add_red,
                 2: self._pie_02_add_green,
                 3: self._pie_02_add_blue,
-                #00: self._ARMAGEDDON,
                 99: self._exit
             }
             try:
@@ -273,9 +264,6 @@ class SinfulTinderness(object):
                 pass
 
             self._add_steps_to_pie_01()
-
-
-            #time.sleep(5)
 
     def _send_doggy_data(self):
         """
@@ -307,6 +295,9 @@ class SinfulTinderness(object):
         self._send()
 
     def _ARMAGEDDON(self):
+        """
+        DO NOT USE. WILL CAUSE HELl ON EARTH.
+        """
         while True:
             time.sleep(1)
             try:
@@ -318,7 +309,6 @@ class SinfulTinderness(object):
         steps = self.sensor_service.get_steps()
         self.payload['pie_01']['green'] += steps
         self.payload['pie_01']['red'] -= steps
-        print(self.payload['pie_01']['green'])
         self._send()
 
     def _pie_01_add_red(self):
@@ -357,17 +347,13 @@ class SinfulTinderness(object):
 def main():
     print(
         """
-        Sinful Tinderness OnStage
+        Sinful Tinderness OnStage started..
         
-        0: Progress in line chart
-        
-        1: Add red to pie 1
-        2: Add green to pie 1
-        3: Add blue to pie 1
-        
-        4: Add red to pie 2
-        5: Add green to pie 2
-        6: Add blue to pie 2
+        Processes running:
+        - Doggydata (threaded)
+        - Progress in line chart
+        - Progress in pie charts
+        - Progress steps in pie chart
         """
     )
     try:

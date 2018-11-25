@@ -1,0 +1,4 @@
+[submodule "SaltFactory-MovesenseClient"]
+	path = SaltFactory-MovesenseClient
+	url = https://github.com/Eurybus/SaltFactory-MovesenseClient
+	branch = master

@@ -18,7 +18,7 @@ class Dogecard extends React.Component {
             {img: 'https://cdn.discordapp.com/attachments/515559595255791629/516018883686039583/doggo2.png'},
             {img: 'https://cdn.discordapp.com/attachments/515559595255791629/516018887637073931/doggo1.png'},
         ]
-        let not_allowed_image = 'https://cdn.discordapp.com/attachments/515559595255791629/515967658529652813/unauthorized_doggo.jpg';
+        let not_allowed_image = 'https://cdn.discordapp.com/attachments/515559595255791629/516144591276212225/unauthorized_doggo.jpg';
         let show_image_src = '';
         if (this.props.dataset) {
             let will_to_live = this.props.dataset.will_to_live;

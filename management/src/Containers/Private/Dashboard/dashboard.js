@@ -74,7 +74,7 @@ class Dashboard extends React.Component {
                                                             <div className="card">
                                                                 <h2 style={{paddingLeft: '20px', paddingTop: '20px'}}>Overall</h2>
                                                                 <hr/>
-                                                                <ProjectionChart dataset={this.state.dataset} width={600} height={200}/>
+                                                                <ProjectionChart dataset={this.state.dataset} width={600} height={250}/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,11 +91,11 @@ class Dashboard extends React.Component {
                                                                 <hr/>
                                                                 <div className="row">
                                                                     <div className="col-lg-6">
-                                                                        <div style={{margin: '15px'}}>
-                                                                            <p>Missing steps from daily goal: </p>
-                                                                            <p>Steps so far: </p>
+                                                                                                                                                <div style={{margin: '15px'}}>
+                                                                            <div className="row" style={{marginLeft: '10px'}}><div style={{backgroundColor: 'green', width:20, height: 20, marginTop: 5}}></div><p style={{paddingLeft: '10px', fontSize: 18}}>Walked so far</p></div>
+                                                                            <div className="row" style={{marginLeft: '10px'}}><div style={{backgroundColor: 'red', width:20, height: 20, marginTop: 5}}></div><p style={{paddingLeft: '10px', fontSize: 18}}>Missing from goal</p></div>
                                                                         </div>
-                                                                    </div>
+                                                                                                                                            </div>
                                                                     <div className="col-lg-6">
                                                                         <PiirakkaChart dataset={this.state.dataset}/>
                                                                     </div>
@@ -103,17 +103,17 @@ class Dashboard extends React.Component {
                                                             </div>
                                                             <br/>
                                                             <div className="card">
-                                                                <h2 style={{paddingLeft: '20px', paddingTop: '20px'}}>Carbon footprint</h2>
+                                                                <h2 style={{paddingLeft: '20px', paddingTop: '20px'}}>Transportation carbon footprint</h2>
                                                                 <hr/>
-                                                                <div className="row">
-                                                                    <div className="col-lg-7" style={{paddingLeft: '10px'}}>
+                                                                 <div className="row">
+                                                                    <div className="col-lg-6" style={{paddingLeft: '10px'}}>
                                                                         <div style={{margin: '15px'}}>
-                                                                            <p>By foot (walk / run)</p>
-                                                                            <p>Public transport(Bus / train)</p>
-                                                                            <p>Private transpor (Car / Airplane)</p>
+                                                                            <div className="row" style={{marginLeft: '10px'}}><div style={{backgroundColor: 'green', width:20, height: 20, marginTop: 5}}></div><p style={{paddingLeft: '10px', fontSize: 18}}>By foot</p></div>
+                                                                            <div className="row" style={{marginLeft: '10px'}}><div style={{backgroundColor: 'yellow', width:20, height: 20, marginTop: 5}}></div><p style={{paddingLeft: '10px', fontSize: 18}}>Public</p></div>
+                                                                            <div className="row" style={{marginLeft: '10px'}}><div style={{backgroundColor: 'red', width:20, height: 20, marginTop: 5}}></div><p style={{paddingLeft: '10px', fontSize: 18}}>Private</p></div>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="col-lg-5">
+                                                                    <div className="col-lg-6">
                                                                         <Piirakka2Chart dataset={this.state.dataset}/>
                                                                     </div>
                                                                 </div>
